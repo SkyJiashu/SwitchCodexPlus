@@ -179,6 +179,27 @@ The active provider ID is stored in `~/.cc-switch/settings.json` → `currentPro
 
 ---
 
+## Security Notes / 安全提示
+
+**Do not zip or upload the project folder after running setup / 运行后不要打包上传整个文件夹。**
+
+After running the scripts, the following files contain **real credentials** and are excluded by `.gitignore`:
+
+运行后以下文件包含**真实凭证**，已由 `.gitignore` 排除：
+
+| File / 文件 | Contains / 内容 |
+|-------------|-----------------|
+| `config.ps1` | Resolved local paths / 本机绝对路径 |
+| `state/official/auth.json` | ChatGPT session tokens / 官方登录 token |
+| `backups/*.json` | Timestamped auth/config snapshots / 带时间戳的认证备份 |
+| `node_modules/` | Compiled native binaries / 编译好的原生模块 |
+
+**Always share via `git push` only** — never share a zip of the directory after running setup or switching modes.
+
+**始终通过 `git push` 分享**，切勿在运行 setup 或切换模式后上传整个目录的压缩包。
+
+---
+
 ## License
 
 MIT

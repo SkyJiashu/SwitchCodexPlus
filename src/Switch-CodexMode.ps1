@@ -200,7 +200,12 @@ function Switch-ToApiManaged {
         [System.IO.File]::WriteAllText($AuthPath, $authJson, $Utf8NoBom)
         Write-Host "Auth applied from CC Switch."
     } else {
-        Write-Host "Warning: no auth field in CC Switch provider; auth.json left unchanged."
+        # No auth in provider — remove stale auth.json to prevent old key being used with new provider.
+        Write-Host "Warning: no auth field in CC Switch provider. Clearing auth.json to prevent credential mismatch."
+        if (Test-Path -LiteralPath $AuthPath) {
+            Remove-Item -LiteralPath $AuthPath -Force
+            Write-Host "auth.json removed. Codex will prompt for credentials on next launch."
+        }
     }
 
     if (-not (Test-Path -LiteralPath $ConfigPath)) {

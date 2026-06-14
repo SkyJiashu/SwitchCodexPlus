@@ -7,8 +7,8 @@ function Write-Warn([string]$msg) { Write-Host "    WARN $msg" -ForegroundColor 
 function Write-Fail([string]$msg) { Write-Host "    FAIL $msg" -ForegroundColor Red }
 
 Write-Host ""
-Write-Host "  SwitchCodexPlus - Setup" -ForegroundColor White
-Write-Host "  ========================" -ForegroundColor DarkGray
+Write-Host "  SwitchCodexPlus Setup" -ForegroundColor White
+Write-Host "  =====================" -ForegroundColor DarkGray
 
 # ── 1. Detect Codex home ──────────────────────────────────────────────────────
 Write-Step "Detecting Codex home (~/.codex)"
@@ -115,8 +115,9 @@ if ($candidates) {
 
 # ── 7. Install better-sqlite3 ─────────────────────────────────────────────────
 Write-Step "Installing better-sqlite3"
-$Sqlite3Dir = Join-Path $Root "node_modules\better-sqlite3"
-if (Test-Path $Sqlite3Dir) {
+$Sqlite3Dir    = Join-Path $Root "node_modules\better-sqlite3"
+$Sqlite3Binary = Join-Path $Sqlite3Dir "lib\index.js"
+if (Test-Path $Sqlite3Binary) {
     Write-OK "Already installed: $Sqlite3Dir"
 } else {
     Write-Host "    Running: npm install better-sqlite3 ..." -ForegroundColor DarkGray
@@ -127,7 +128,7 @@ if (Test-Path $Sqlite3Dir) {
         cmd /c "`"$npmCmd`" install better-sqlite3 --save-dev" 2>&1 |
             Where-Object { $_ -notmatch '^npm warn' } |
             ForEach-Object { Write-Host "    $_" -ForegroundColor DarkGray }
-        if (-not (Test-Path $Sqlite3Dir)) { throw "npm install completed but better-sqlite3 not found." }
+        if (-not (Test-Path $Sqlite3Binary)) { throw "npm install completed but better-sqlite3 not found at: $Sqlite3Binary" }
         Write-OK "Installed: $Sqlite3Dir"
     } finally { Pop-Location }
 }
