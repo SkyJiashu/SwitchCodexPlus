@@ -8,13 +8,27 @@
 
 ## Prerequisites / 前置条件
 
-| Tool / 工具 | Required / 必须 | Notes / 说明 |
-|-------------|-----------------|--------------|
-| [OpenAI Codex](https://github.com/openai/codex) (patched build) | ✅ | CodexPatched 补丁版 |
-| [Codex++](https://github.com/nicepkg/aide) | ✅ | UI 功能增强 |
-| [CC Switch](https://github.com/nicepkg/cc-switch) | ✅ | API 服务商管理器 |
-| [Node.js](https://nodejs.org) LTS (v18+) | ✅ | SQLite 访问依赖 |
-| Git | optional / 可选 | For version control |
+### For mode switching / 模式切换（核心功能）
+
+| Tool / 工具 | Notes / 说明 |
+|-------------|--------------|
+| [OpenAI Codex](https://github.com/openai/codex) | Standard install is fine / 标准安装即可 |
+| [CC Switch](https://github.com/nicepkg/cc-switch) | API provider manager / API 服务商管理器 |
+| [Node.js](https://nodejs.org) LTS (v18+) | For SQLite access / 用于读取 SQLite |
+
+### For launchers / 启动器（可选功能）
+
+| Tool / 工具 | Notes / 说明 |
+|-------------|--------------|
+| [Codex++](https://github.com/nicepkg/aide) | Injects UI enhancements at launch / 启动时注入功能增强 |
+
+> **Auto-detection / 自动检测**
+>
+> `setup.bat` detects your Codex installation automatically:
+> - **CodexPatched** (`OpenAI\CodexPatched\`) — uses existing patched copy
+> - **Standard Codex** (`OpenAI\Codex\`) — Codex++ will patch it in-place on first launcher run; originals are backed up automatically as `Codex.real.exe` and `app.asar.original`
+>
+> `setup.bat` 自动检测 Codex 安装，优先使用已有的 CodexPatched 副本，找不到时回落到标准 Codex 安装目录。使用启动器首次运行时，Codex++ 会自动在原目录就地打补丁，原始文件自动备份。
 
 ---
 

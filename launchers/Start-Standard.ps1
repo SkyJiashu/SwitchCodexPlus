@@ -8,7 +8,7 @@ if (-not (Test-Path -LiteralPath $ConfigFile)) {
 }
 . $ConfigFile
 
-$PatchedApp     = $Config.CodexPatchedApp
+$PatchedApp     = $Config.CodexAppPath
 $PatchedExe     = Join-Path $PatchedApp "Codex.exe"
 $PatchedRealExe = Join-Path $PatchedApp "Codex.real.exe"
 $PatchedAsar    = Join-Path $PatchedApp "resources\app.asar"
