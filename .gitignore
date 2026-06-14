@@ -1,0 +1,5 @@
+config.ps1
+node_modules/
+backups/
+state/
+*.bak-*
