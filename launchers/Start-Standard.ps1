@@ -57,6 +57,8 @@ Set-JsonProperty $settings "codexExtraArgs"                @()
 Set-JsonProperty $settings "launchMode"                    "patch"
 Set-JsonProperty $settings "enhancementsEnabled"           $true
 Set-JsonProperty $settings "providerSyncEnabled"           $false
+Set-JsonProperty $settings "ccsLinkEnabled"                $false
+Set-JsonProperty $settings "relayProfilesEnabled"          $false
 Set-JsonProperty $settings "codexAppPluginEntryUnlock"     $false
 Set-JsonProperty $settings "codexAppPluginMarketplaceUnlock" $false
 Set-JsonProperty $settings "codexAppForcePluginInstall"    $false

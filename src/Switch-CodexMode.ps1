@@ -181,8 +181,9 @@ function Switch-ToApiManaged {
     Stop-CodexProcesses
     New-DirectoryIfMissing $BackupRoot
     New-DirectoryIfMissing $OfficialState
-    Backup-FileIfExists -Path $ConfigPath -Label "pre-api"
-    Backup-FileIfExists -Path $AuthPath   -Label "pre-api"
+    Backup-FileIfExists -Path $ConfigPath                              -Label "pre-api"
+    Backup-FileIfExists -Path $AuthPath                               -Label "pre-api"
+    Backup-FileIfExists -Path (Join-Path $CodexHome "state_5.sqlite") -Label "pre-api-sessions"
 
     $authKind = Get-AuthKind -Path $AuthPath
     if ($authKind -eq "chatgpt-or-other") {
