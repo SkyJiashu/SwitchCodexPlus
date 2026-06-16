@@ -42,6 +42,14 @@ function Show-ProcessSummary {
 Write-Host "=== Codex++ Standard launcher ==="
 Write-Host "App: $PatchedApp"
 
+# ── Step 1: Apply CC Switch API provider config ──────────────────────────────
+Write-Section "Step 1 — Applying CC Switch API provider config"
+$SwitchScript = Join-Path $PSScriptRoot "..\src\Switch-CodexMode.ps1"
+try { & $SwitchScript -Mode ApiManaged }
+catch { Write-Warning "API switch error: $_ — continuing with existing config.toml / auth.json" }
+Write-Host ""
+Write-Section "Step 2 — Applying Codex++ settings and launching"
+
 if (!(Test-Path -LiteralPath $PatchedExe))  { throw "Patched Codex.exe not found: $PatchedExe" }
 if (!(Test-Path -LiteralPath $PatchedAsar)) { throw "Patched app.asar not found: $PatchedAsar" }
 if (!(Test-Path -LiteralPath $CodexPlus))   { throw "Codex++ not found: $CodexPlus" }
