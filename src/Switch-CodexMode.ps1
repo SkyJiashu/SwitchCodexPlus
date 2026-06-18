@@ -243,6 +243,13 @@ function Switch-ToApiManaged {
         Write-Host "Warning: no config in CC Switch provider; provider section left as-is."
     }
 
+    # Sanitize model_reasoning_effort — "xhigh" (added by Codex++ UI) crashes the binary
+    $currentEffort = Get-TopLevelString -Text $text -Key "model_reasoning_effort"
+    if ($currentEffort -and $currentEffort -notin @("low","medium","high")) {
+        Write-Host "Warning: model_reasoning_effort '$currentEffort' is not valid — resetting to 'high'"
+        $text = Set-TopLevelString -Text $text -Key "model_reasoning_effort" -Value "high"
+    }
+
     $text = Set-TopLevelString -Text $text -Key "sandbox_mode"        -Value "danger-full-access"
     $text = Set-TopLevelString -Text $text -Key "approval_policy"     -Value "never"
     $text = Set-TopLevelString -Text $text -Key "forced_login_method" -Value "api"
