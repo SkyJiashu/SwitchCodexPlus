@@ -158,20 +158,18 @@ function Read-CcSwitchCurrentProvider {
         throw "read-provider.js not found: $ReadProviderScript"
     }
 
-    $settings   = Get-Content -LiteralPath $CcSwitchSettings -Raw | ConvertFrom-Json
-    $providerId = $settings.currentProviderCodex
-    if (-not $providerId) { throw "No currentProviderCodex in CC Switch settings." }
-
-    $json = & $NodeExe $ReadProviderScript $CcSwitchDb $providerId 2>&1
+    # Pass settings.json path to Node.js so it reads currentProviderCodex as UTF-8.
+    # Avoids PowerShell 5.1 encoding issues with non-ASCII provider IDs.
+    $json = & $NodeExe $ReadProviderScript $CcSwitchDb $CcSwitchSettings 2>&1
     if ($LASTEXITCODE -ne 0) {
-        throw "Failed to read provider '$providerId': $json"
+        throw "Failed to read provider from CC Switch: $json"
     }
 
     try {
         $parsed = $json | ConvertFrom-Json
-        return [pscustomobject]@{ Id = $providerId; Data = $parsed }
+        return [pscustomobject]@{ Id = $parsed.id; Data = $parsed }
     } catch {
-        throw "Failed to parse provider JSON for '$providerId': $_"
+        throw "Failed to parse provider JSON: $_"
     }
 }
 
